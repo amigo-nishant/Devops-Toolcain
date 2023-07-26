@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-frontend
+  labels:
+    app: pluto
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: pluto
+  template:
+    metadata:
+      labels:
+        app: pluto
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: REACT_APP_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: REACT_APP_BASE_URL
+            - name: REACT_APP_AUTH0_DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: REACT_APP_AUTH0_DOMAIN
+            - name: REACT_APP_AUTH0_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: REACT_APP_AUTH0_CLIENT_ID
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP

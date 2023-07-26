@@ -1,0 +1,25 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /data/loki/positions.yaml
+
+clients:
+  - url: https://loki1-dev.herm.is/loki/api/v1/push
+    basic_auth:
+      username: <loki-id>
+      password: <loki-password>
+    # external_labels: 
+    # hostname: ${HOSTNAME}
+
+scrape_configs:
+- job_name: system
+  static_configs:
+  - targets:
+      - localhost
+    labels:
+      job: pm2logs
+      name: dev2
+      __path__: /home/ubuntu/.pm2/logs/*log
+      # hostname: ${HOSTNAME}

@@ -1,0 +1,10 @@
+replicaCount: 1
+
+image:
+  repository: akashacharya/pluto-frontend
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  targetPort: 3000

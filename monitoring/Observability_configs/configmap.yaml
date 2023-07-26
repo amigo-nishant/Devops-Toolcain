@@ -1,0 +1,11 @@
+piVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-ini
+data:
+  grafana.ini: |
+    [server]
+      protocol = https
+      http_port = 3000
+      cert_file=/etc/grafana/certs/tls.crt
+      cert_key=/etc/grafana/certs/tls.key
